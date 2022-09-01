@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Calculator Lock</string>
+    <string name="WelcomeText">Welcome to safe gallery vault</string>
+    <string name="private_policy"><u>Private Policy</u></string>
 </resources>
