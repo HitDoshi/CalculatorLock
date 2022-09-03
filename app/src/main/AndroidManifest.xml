@@ -10,13 +10,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CalculatorLock">
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".activity.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".activity.PasswordRecoveryActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.SecurityQuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PasswordSetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SplashActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

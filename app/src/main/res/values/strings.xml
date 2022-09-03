@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Calculator Lock</string>
+    <string name="app_goal">Calculator Lock : Gallery Vault</string>
     <string name="WelcomeText">Welcome to safe gallery vault</string>
     <string name="private_policy"><u>Private Policy</u></string>
+    <string name="passInfo_1">Type your password\n(From 4 to 6 into calculator) and hit “=” .</string>
+    <string name="passInfo_2">In case you forget your password simply enter a \nnumber ‘11223344’ into \n calculator and press ‘=’ button,then retrieve your \npassword by entering the answer \n of your security question. or retrive by email.</string>
+    <string name="passInfo_3">Enter a 4-digit password and\npress the = button</string>
+    <string name="confirm_pass">You have enter the following number \n as your passcode</string>
+    <string name="storage_permission">Calculator Lock : Gallery Vault needs \n permission to access photos, media \n and files on your device?</string>
+    <string name="edittext_hint_1">Your answer</string>
+    <string name="recovery_email_text">In case you forget your PASSWORD, we will send \nit to the email address below.</string>
+    <string name="edittext_hint_2">Recovery Email</string>
 </resources>
