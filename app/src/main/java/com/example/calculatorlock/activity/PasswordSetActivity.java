@@ -12,10 +12,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.calculatorlock.R;
 import com.example.calculatorlock.databinding.ActivityPasswordSetBinding;
 import com.example.calculatorlock.model.PreKey;
+
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PasswordSetActivity extends AppCompatActivity {
 
@@ -32,6 +38,13 @@ public class PasswordSetActivity extends AppCompatActivity {
     ActivityPasswordSetBinding passwordSetBinding;
 
     SharedPreferences sharedPreferences;
+
+    double num=1 , num1 , num2 , total='\0' , temp=0 ;
+    ArrayList<String> number = new ArrayList<>();
+    String symbol = null;
+
+    //check only number or not
+    String regex = "[0-9]+";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +88,24 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(!sharedPreferences.getBoolean(PreKey.Password_Set,false))
-                    conform_pass.show();
-                else
-                    startActivity(new Intent(getApplicationContext(), SecurityQuestionActivity.class));
+                Pattern p = Pattern.compile(regex);
+                Matcher m = p.matcher(total + "");
+
+                number.clear();
+                passwordSetBinding.calculateAnsTextview.setText("");
+                passwordSetBinding.numberListTextview.setText(total+"");
+                temp = total;
+
+//                if(!sharedPreferences.getBoolean(PreKey.Password_Set,false)) {
+//                    if(m.matches())
+//                        conform_pass.show();
+//                }
+//                else {
+//                    if (sharedPreferences.getString(PreKey.Password,"1234").equals(total+"")) {
+//                        startActivity(new Intent(getApplicationContext(), SecurityQuestionActivity.class));
+//                    }
+//                }
+
             }
         });
 
@@ -97,6 +124,262 @@ public class PasswordSetActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), SecurityQuestionActivity.class));
             }
         });
+
+        passwordSetBinding.one.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = null;
+                calculate("1");
+            }
+        });
+
+        passwordSetBinding.two.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calculate("2");
+                symbol = null;
+            }
+        });
+
+        passwordSetBinding.three.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = null;
+                calculate("3");
+            }
+        });
+
+        passwordSetBinding.four.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = null;
+                calculate("4");
+            }
+        });
+
+        passwordSetBinding.five.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = null;
+                calculate("5");
+            }
+        });
+
+        passwordSetBinding.six.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = null;
+                calculate("6");
+            }
+        });
+
+        passwordSetBinding.seven.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = null;
+                calculate("7");
+            }
+        });
+
+        passwordSetBinding.eight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = null;
+                calculate("8");
+            }
+        });
+
+        passwordSetBinding.nine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = null;
+                calculate("9");
+            }
+        });
+
+        passwordSetBinding.zero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = null;
+                calculate("0");
+            }
+        });
+
+        passwordSetBinding.doubleZero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = null;
+                calculate("00");
+            }
+        });
+
+        passwordSetBinding.dot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = null;
+                calculate(".");
+            }
+        });
+
+        passwordSetBinding.percentage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = "%" ;
+                calculate("%");
+            }
+        });
+
+        passwordSetBinding.addition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = "+" ;
+                calculate("+");
+            }
+        });
+
+        passwordSetBinding.subtraction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = "-" ;
+                calculate("-");
+            }
+        });
+
+        passwordSetBinding.multiplication.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = "*" ;
+                calculate("*");
+            }
+        });
+
+        passwordSetBinding.division.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                symbol = "/" ;
+                calculate("/");
+            }
+        });
+
+        passwordSetBinding.remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        passwordSetBinding.clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                number.clear();
+                passwordSetBinding.numberListTextview.setText("");
+                passwordSetBinding.calculateAnsTextview.setText("");
+                total = '\0';
+                temp = 0;
+            }
+        });
+
+    }
+
+    private void calculate(String s) {
+
+        int size = number.size();
+        String list = null;
+        int p = 0;
+        if(symbol==null)
+        {
+            if(size!=0 && num==1) {
+                String a = number.get(size-1);
+                a+=(s);
+                number.set(size-1, a);
+            }else if(size!=0 && num==0)
+            {
+                number.add(s);
+                num = 1;
+            }
+            else {
+                number.add(s);
+            }
+        }
+        else
+        {
+//            if(temp!=0)
+//            {
+//                number.add(temp+"");
+//                temp=0;
+//            }
+
+            if(number.size()>0) {
+                if (number.get(size - 1).equals("+") || number.get(size - 1).equals("-") ||
+                        number.get(size - 1).equals("*") || number.get(size - 1).equals("/")) {
+                    number.set(size - 1, s);
+                    p=1;
+                }
+            }
+
+            if(p==0)
+                number.add(s);
+
+
+            num = 0;
+        }
+
+        for (int i=0;i<number.size();i++){
+
+            if(i==0) {
+                list = (number.get(i));
+            }
+            else {
+                list+=(number.get(i));
+            }
+        }
+
+        for (int i=0;i<number.size();i++){
+            if(i==0)
+                num1 = Double.parseDouble(number.get(i));
+
+            if(number.get(i).equals("+")){
+
+                if (i+1<number.size())
+                {
+                    num2 = Double.parseDouble(number.get(i+1));
+                    total = num1 = num1 + num2;
+                    passwordSetBinding.calculateAnsTextview.setText(total+"");
+                }
+            }
+
+            if(number.get(i).equals("-")){
+
+                if (i+1<number.size())
+                {
+                    num2 = Double.parseDouble(number.get(i+1));
+                    total = num1 = num1 - num2;
+                    passwordSetBinding.calculateAnsTextview.setText(total+"");
+                }
+            }
+
+            if(number.get(i).equals("*")){
+
+                if (i+1<number.size())
+                {
+                    num2 = Double.parseDouble(number.get(i+1));
+                    total = num1 = num1 * num2;
+                    passwordSetBinding.calculateAnsTextview.setText(total+"");
+                }
+            }
+
+            if(number.get(i).equals("/")){
+
+                if (i+1<number.size())
+                {
+                    num2 = Double.parseDouble(number.get(i+1));
+                    total = num1 = num1 / num2;
+                    passwordSetBinding.calculateAnsTextview.setText(total+"");
+                }
+            }
+        }
+
+        passwordSetBinding.numberListTextview.setText(list);
 
     }
 }

@@ -34,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
                 if(isFirstTime)
                     startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
                 else
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    startActivity(new Intent(getApplicationContext(), PasswordSetActivity.class));
             }
         }, 2000);
     }

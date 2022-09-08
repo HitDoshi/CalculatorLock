@@ -64,7 +64,6 @@ public class SecurityQuestionActivity extends AppCompatActivity {
         arrayList.add("What is your favorite movie?");
         arrayList.add("What is your favorite sport?");
         arrayList.add("In what city were you born?");
-        arrayList.add("What are the last five digits of your driver's license number?");
         arrayList.add("Who is your best friend?");
 
         sharedPreferences = getSharedPreferences(PreKey.preference_name,MODE_PRIVATE);
