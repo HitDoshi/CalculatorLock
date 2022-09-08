@@ -8,4 +8,6 @@ public class PreKey {
     public static final String HIDE_LOCK = "hide_lock";
     public static final String Security_Que = "security_que";
 
+    public static final String SecurityDB = "SecurityDB";
+
 }

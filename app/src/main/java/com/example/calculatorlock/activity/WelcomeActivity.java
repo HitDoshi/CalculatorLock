@@ -31,7 +31,6 @@ public class WelcomeActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sharedPreferences.edit().putBoolean(PreKey.firstTime_Lunch,false).apply();
                 startActivity(new Intent(getApplicationContext(), PasswordSetActivity.class));
             }
         });
