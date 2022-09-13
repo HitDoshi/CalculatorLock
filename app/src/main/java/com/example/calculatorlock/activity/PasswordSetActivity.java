@@ -3,17 +3,15 @@ package com.example.calculatorlock.activity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.calculatorlock.R;
 import com.example.calculatorlock.databinding.ActivityPasswordSetBinding;
@@ -39,9 +37,10 @@ public class PasswordSetActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-    double num=1 , num1 , num2 , total='\0' , temp=0 ;
+    double num=1 , num1 , num2 , total='\0' , temp='\0' ;
     ArrayList<String> number = new ArrayList<>();
     String symbol = null;
+    String pn = null;
 
     //check only number or not
     String regex = "[0-9]+";
@@ -95,6 +94,7 @@ public class PasswordSetActivity extends AppCompatActivity {
                 passwordSetBinding.calculateAnsTextview.setText("");
                 passwordSetBinding.numberListTextview.setText(total+"");
                 temp = total;
+                addData(String.valueOf(total));
 
 //                if(!sharedPreferences.getBoolean(PreKey.Password_Set,false)) {
 //                    if(m.matches())
@@ -128,16 +128,28 @@ public class PasswordSetActivity extends AppCompatActivity {
         passwordSetBinding.one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                symbol = null;
-                calculate("1");
+                symbol = null; //above fun calling
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData("1");
             }
         });
 
         passwordSetBinding.two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                calculate("2");
                 symbol = null;
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData("2");
             }
         });
 
@@ -145,7 +157,13 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = null;
-                calculate("3");
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData("3");
             }
         });
 
@@ -153,7 +171,13 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = null;
-                calculate("4");
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData("4");
             }
         });
 
@@ -161,7 +185,13 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = null;
-                calculate("5");
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData("5");
             }
         });
 
@@ -169,7 +199,13 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = null;
-                calculate("6");
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData("6");
             }
         });
 
@@ -177,7 +213,13 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = null;
-                calculate("7");
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData("7");
             }
         });
 
@@ -185,7 +227,13 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = null;
-                calculate("8");
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData("8");
             }
         });
 
@@ -193,7 +241,14 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = null;
-                calculate("9");
+
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData("9");
             }
         });
 
@@ -201,7 +256,13 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = null;
-                calculate("0");
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData("0");
             }
         });
 
@@ -209,7 +270,13 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = null;
-                calculate("00");
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData("00");
             }
         });
 
@@ -217,7 +284,13 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = null;
-                calculate(".");
+
+                if(temp!='\0')
+                {
+                    number.clear();
+                    temp = '\0';
+                }
+                addData(".");
             }
         });
 
@@ -225,7 +298,7 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = "%" ;
-                calculate("%");
+                addData("%");
             }
         });
 
@@ -233,7 +306,14 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = "+" ;
-                calculate("+");
+                temp = '\0';
+
+                if (number.size()=='\0') {
+                    passwordSetBinding.numberListTextview.setText("+");
+                    pn = "+";
+                }
+                else
+                    addData("+");
             }
         });
 
@@ -241,7 +321,14 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = "-" ;
-                calculate("-");
+                temp = '\0';
+
+                if (number.size()=='\0') {
+                    passwordSetBinding.numberListTextview.setText("-");
+                    pn = "-";
+                }
+                else
+                    addData("-");
             }
         });
 
@@ -249,7 +336,10 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = "*" ;
-                calculate("*");
+                temp = '\0';
+
+                if(number.size()!='\0')
+                    addData("*");
             }
         });
 
@@ -257,14 +347,49 @@ public class PasswordSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 symbol = "/" ;
-                calculate("/");
+                temp = '\0';
+
+                if(number.size()!='\0')
+                    addData("/");
             }
         });
 
         passwordSetBinding.remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int size = number.size();
+                String full = null;
 
+                if (size!=0)
+                {
+                    full = number.get(size-1);
+
+                    if(full.length()!=1)
+                    {
+                        full = full.substring(0,full.length()-1);
+                        Log.d("Remove",full);
+                        number.set(size-1,full);
+                        passwordSetBinding.numberListTextview.setText(full);
+                    }
+                    else{
+                        number.remove(size-1);
+                    }
+                }
+                else
+                {
+                    pn = null;
+                    passwordSetBinding.numberListTextview.setText("");
+                    passwordSetBinding.calculateAnsTextview.setText("");
+                }
+
+                if(size>1)
+                {
+                    calculate();
+                }
+
+                if (number.size()==0){
+                    passwordSetBinding.numberListTextview.setText("");
+                }
             }
         });
 
@@ -276,15 +401,15 @@ public class PasswordSetActivity extends AppCompatActivity {
                 passwordSetBinding.calculateAnsTextview.setText("");
                 total = '\0';
                 temp = 0;
+                pn = null;
             }
         });
 
     }
 
-    private void calculate(String s) {
+    private void addData(String s) {
 
         int size = number.size();
-        String list = null;
         int p = 0;
         if(symbol==null)
         {
@@ -298,7 +423,13 @@ public class PasswordSetActivity extends AppCompatActivity {
                 num = 1;
             }
             else {
+
+                if(pn!=null)
+                {
+                    s = pn + s;
+                }
                 number.add(s);
+                pn = null ;
             }
         }
         else
@@ -324,6 +455,14 @@ public class PasswordSetActivity extends AppCompatActivity {
             num = 0;
         }
 
+        calculate();
+
+    }
+
+    public void calculate(){
+
+        String list = null;
+
         for (int i=0;i<number.size();i++){
 
             if(i==0) {
@@ -344,7 +483,7 @@ public class PasswordSetActivity extends AppCompatActivity {
                 {
                     num2 = Double.parseDouble(number.get(i+1));
                     total = num1 = num1 + num2;
-                    passwordSetBinding.calculateAnsTextview.setText(total+"");
+                    passwordSetBinding.calculateAnsTextview.setText("= " + total);
                 }
             }
 
@@ -354,7 +493,7 @@ public class PasswordSetActivity extends AppCompatActivity {
                 {
                     num2 = Double.parseDouble(number.get(i+1));
                     total = num1 = num1 - num2;
-                    passwordSetBinding.calculateAnsTextview.setText(total+"");
+                    passwordSetBinding.calculateAnsTextview.setText("= " + total);
                 }
             }
 
@@ -364,7 +503,7 @@ public class PasswordSetActivity extends AppCompatActivity {
                 {
                     num2 = Double.parseDouble(number.get(i+1));
                     total = num1 = num1 * num2;
-                    passwordSetBinding.calculateAnsTextview.setText(total+"");
+                    passwordSetBinding.calculateAnsTextview.setText("= " + total);
                 }
             }
 
@@ -374,12 +513,11 @@ public class PasswordSetActivity extends AppCompatActivity {
                 {
                     num2 = Double.parseDouble(number.get(i+1));
                     total = num1 = num1 / num2;
-                    passwordSetBinding.calculateAnsTextview.setText(total+"");
+                    passwordSetBinding.calculateAnsTextview.setText("= " + total);
                 }
             }
         }
 
         passwordSetBinding.numberListTextview.setText(list);
-
     }
 }
