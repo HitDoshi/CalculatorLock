@@ -74,7 +74,7 @@ public class PasswordSetActivity extends AppCompatActivity {
         conform_pass.setCancelable(false);
 
         if(!sharedPreferences.getBoolean(PreKey.Password_Set,false))
-            password_info.show();
+            //password_info.show();
 
         got_it.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +90,11 @@ public class PasswordSetActivity extends AppCompatActivity {
                 Pattern p = Pattern.compile(regex);
                 Matcher m = p.matcher(total + "");
 
+                if(passwordSetBinding.numberListTextview.getText().toString().equals("1"))
+                {
+                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                    finish();
+                }
                 number.clear();
                 passwordSetBinding.calculateAnsTextview.setText("");
                 passwordSetBinding.numberListTextview.setText(total+"");

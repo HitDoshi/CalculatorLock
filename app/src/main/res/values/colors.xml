@@ -15,4 +15,6 @@
     <color name="dusty_grey">#989898</color>
     <color name="silver_black">#282828</color>
     <color name="mix_silver">#555555</color>
+    <color name="card_color">#202020</color>
+    <color name="dark_blue">#003CA6</color>
 </resources>
