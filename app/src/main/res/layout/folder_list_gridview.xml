@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/list_img">
+        android:id="@+id/list_item">
 
         <RelativeLayout
             android:layout_width="wrap_content"

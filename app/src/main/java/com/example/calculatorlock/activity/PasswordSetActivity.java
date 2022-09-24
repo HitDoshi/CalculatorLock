@@ -97,7 +97,13 @@ public class PasswordSetActivity extends AppCompatActivity {
                 }
                 number.clear();
                 passwordSetBinding.calculateAnsTextview.setText("");
-                passwordSetBinding.numberListTextview.setText(total+"");
+
+
+                if(total-((int)(total))==0){
+                    passwordSetBinding.numberListTextview.setText("= " + (int)total);
+                }else{
+                    passwordSetBinding.numberListTextview.setText(total+"");
+                }
                 temp = total;
                 addData(String.valueOf(total));
 
@@ -247,7 +253,6 @@ public class PasswordSetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 symbol = null;
 
-
                 if(temp!='\0')
                 {
                     number.clear();
@@ -290,12 +295,13 @@ public class PasswordSetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 symbol = null;
 
-                if(temp!='\0')
-                {
-                    number.clear();
-                    temp = '\0';
+                if(!number.get(number.size()-1).contains(".")) {
+                    if (temp != '\0') {
+                        number.clear();
+                        temp = '\0';
+                    }
+                    addData(".");
                 }
-                addData(".");
             }
         });
 
@@ -387,7 +393,7 @@ public class PasswordSetActivity extends AppCompatActivity {
                     passwordSetBinding.calculateAnsTextview.setText("");
                 }
 
-                if(size>1)
+                if(size>0)
                 {
                     calculate();
                 }
@@ -479,8 +485,11 @@ public class PasswordSetActivity extends AppCompatActivity {
         }
 
         for (int i=0;i<number.size();i++){
-            if(i==0)
+
+            if(i==0) {
                 num1 = Double.parseDouble(number.get(i));
+                passwordSetBinding.calculateAnsTextview.setText("");
+            }
 
             if(number.get(i).equals("+")){
 
@@ -488,6 +497,11 @@ public class PasswordSetActivity extends AppCompatActivity {
                 {
                     num2 = Double.parseDouble(number.get(i+1));
                     total = num1 = num1 + num2;
+                    passwordSetBinding.calculateAnsTextview.setText("= " + total);
+                }
+                else{
+                    // 2 + write
+                    total = num1 = num1 + 0;
                     passwordSetBinding.calculateAnsTextview.setText("= " + total);
                 }
             }
@@ -499,6 +513,10 @@ public class PasswordSetActivity extends AppCompatActivity {
                     num2 = Double.parseDouble(number.get(i+1));
                     total = num1 = num1 - num2;
                     passwordSetBinding.calculateAnsTextview.setText("= " + total);
+                }else{
+                    // 2 - write = 2-0 calculate
+                    total = num1 = num1 - 0;
+                    passwordSetBinding.calculateAnsTextview.setText("= " + total);
                 }
             }
 
@@ -508,6 +526,9 @@ public class PasswordSetActivity extends AppCompatActivity {
                 {
                     num2 = Double.parseDouble(number.get(i+1));
                     total = num1 = num1 * num2;
+                    passwordSetBinding.calculateAnsTextview.setText("= " + total);
+                }else{
+                    total = num1 = num1 * 1;
                     passwordSetBinding.calculateAnsTextview.setText("= " + total);
                 }
             }
@@ -519,8 +540,20 @@ public class PasswordSetActivity extends AppCompatActivity {
                     num2 = Double.parseDouble(number.get(i+1));
                     total = num1 = num1 / num2;
                     passwordSetBinding.calculateAnsTextview.setText("= " + total);
+                }else{
+                    total = num1 = num1/1;
+                    passwordSetBinding.calculateAnsTextview.setText("= " + total);
                 }
             }
+        }
+
+        if(list == null){
+            passwordSetBinding.calculateAnsTextview.setText("");
+            total=0;
+        }
+
+        if(total-((int)(total))==0){
+            passwordSetBinding.calculateAnsTextview.setText("= " + (int)total);
         }
 
         passwordSetBinding.numberListTextview.setText(list);

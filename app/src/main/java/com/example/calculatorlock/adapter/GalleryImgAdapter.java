@@ -65,7 +65,7 @@ public class GalleryImgAdapter extends RecyclerView.Adapter<GalleryImgAdapter.Vi
             this.img = (ImageView) itemView.findViewById(R.id.icon);
 //            this.folder_name_textView = (TextView) itemView.findViewById(R.id.folder_name);
 //            this.folder_work_title_textView = (TextView) itemView.findViewById(R.id.folder_work_title);
-            linearLayout = (LinearLayout) itemView.findViewById(R.id.list_img);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.list_item);
         }
     }
 

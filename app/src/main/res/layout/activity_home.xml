@@ -11,18 +11,26 @@
         android:layout_height="match_parent"
         android:id="@+id/my_drawer_layout">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         >
 
             <ImageView
@@ -64,9 +72,27 @@
             android:id="@+id/folder_list_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/toolbar"
             android:layout_marginTop="20dp"/>
+        </LinearLayout>
 
-    </LinearLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/dark_orange"
+                android:src="@drawable/plus"
+                app:fabCustomSize="80dp"
+                android:layout_gravity="bottom"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/Floating_Button"/>
+
+        </RelativeLayout>
+
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation"
@@ -82,15 +108,5 @@
         app:menu="@menu/nav_drawer_item" />
     </androidx.drawerlayout.widget.DrawerLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/dark_orange"
-        android:src="@drawable/plus"
-        app:fabCustomSize="80dp"
-        android:id="@+id/Floating_Button"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
