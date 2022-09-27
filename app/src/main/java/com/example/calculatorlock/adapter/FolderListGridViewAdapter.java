@@ -1,5 +1,6 @@
 package com.example.calculatorlock.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -42,7 +43,7 @@ public class FolderListGridViewAdapter extends RecyclerView.Adapter<FolderListGr
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FolderListGridViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FolderListGridViewAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.icon.setImageResource(icon.get(position));
         holder.folder_name_textView.setText(folderName.get(position));
@@ -50,7 +51,9 @@ public class FolderListGridViewAdapter extends RecyclerView.Adapter<FolderListGr
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(position==0){
+                    activity.startActivity(new Intent(activity,GalleryActivity.class));
+                }
             }
         });
     }

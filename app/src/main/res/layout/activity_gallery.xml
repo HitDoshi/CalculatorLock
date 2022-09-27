@@ -65,20 +65,30 @@
         <ImageView
             android:id="@+id/folder_add"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/folder_add"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:layout_marginRight="15dp"/>
+            android:layout_marginRight="15dp"
+            android:src="@drawable/folder_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.appcompat.widget.Toolbar>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/folder_list_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"/>
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

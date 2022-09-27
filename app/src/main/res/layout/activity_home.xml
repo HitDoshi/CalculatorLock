@@ -73,26 +73,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/toolbar"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="10dp"/>
         </LinearLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="20dp"
-                android:backgroundTint="@color/dark_orange"
-                android:src="@drawable/plus"
-                app:fabCustomSize="80dp"
-                android:layout_gravity="bottom"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:id="@+id/Floating_Button"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Floating_Button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:fabCustomSize="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/dark_orange"
+            android:src="@drawable/plus"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         </RelativeLayout>
-
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation"

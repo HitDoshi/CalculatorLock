@@ -1,5 +1,7 @@
 package com.example.calculatorlock.adapter;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +18,14 @@ import java.util.ArrayList;
 
 public class GalleryImgAdapter extends RecyclerView.Adapter<GalleryImgAdapter.ViewHolder> {
 
-    ArrayList<Integer> icon = new ArrayList<>();
+    ArrayList<Bitmap> image = new ArrayList<>();
     ArrayList<String> folderName = new ArrayList<>();
     ArrayList<String> folderTitle = new ArrayList<>();
+    Activity activity;
 
-    public GalleryImgAdapter(ArrayList<Integer> icon, ArrayList<String> folderName, ArrayList<String> folderTitle) {
-        this.icon = icon;
-        this.folderName = folderName;
-        this.folderTitle = folderTitle;
+    public GalleryImgAdapter(Activity activity, ArrayList<Bitmap> image) {
+        this.activity=activity;
+        this.image = image;
     }
 
     @NonNull
@@ -38,7 +40,7 @@ public class GalleryImgAdapter extends RecyclerView.Adapter<GalleryImgAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull GalleryImgAdapter.ViewHolder holder, int position) {
 
-        holder.img.setImageResource(icon.get(position));
+        holder.img.setImageBitmap(image.get(position));
 //        holder.folder_name_textView.setText(folderName.get(position));
 //        holder.folder_work_title_textView.setText(folderTitle.get(position));
 
@@ -52,7 +54,7 @@ public class GalleryImgAdapter extends RecyclerView.Adapter<GalleryImgAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return icon.size();
+        return image.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,7 +64,7 @@ public class GalleryImgAdapter extends RecyclerView.Adapter<GalleryImgAdapter.Vi
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.img = (ImageView) itemView.findViewById(R.id.icon);
+            this.img = (ImageView) itemView.findViewById(R.id.img);
 //            this.folder_name_textView = (TextView) itemView.findViewById(R.id.folder_name);
 //            this.folder_work_title_textView = (TextView) itemView.findViewById(R.id.folder_work_title);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.list_item);

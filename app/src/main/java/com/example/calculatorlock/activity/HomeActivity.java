@@ -1,21 +1,30 @@
 package com.example.calculatorlock.activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -27,14 +36,22 @@ import com.example.calculatorlock.adapter.FolderListAdapter;
 import com.example.calculatorlock.adapter.FolderListGridViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.FilenameUtils;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    int PICK_IMAGE_MULTIPLE = 1;
+    int PICK_IMAGE_MULTIPLE = 100;
     String imageEncoded;
     List<String> imagesEncodedList;
 
@@ -93,12 +110,33 @@ public class HomeActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"),
-                        PICK_IMAGE_MULTIPLE);
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent,"Select Picture"),
+//                        PICK_IMAGE_MULTIPLE);
+
+                if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED){
+
+                    ActivityCompat.requestPermissions(HomeActivity.this,new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},200);
+                }
+
+                if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+
+                    ActivityCompat.requestPermissions(HomeActivity.this,new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE},100);
+                }else{
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setType("image/*");
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                    startActivityForResult(Intent.createChooser(intent,"Select Image"),100);
+                }
             }
         });
     }
@@ -121,11 +159,44 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode==100 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setType("image/*");
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+
+            startActivityForResult(Intent.createChooser(intent,"Select Image"),100);
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        try {
-            // When an Image is picked
-            if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK
-                    && null != data) {
+//
+//            // When an Image is picked
+//            if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK
+//                    && data != null) {
+//
+//                Uri uri = data.getData();
+//                try{
+//
+//                    FileOutputStream fileout=openFileOutput("mytextfile.txt", MODE_PRIVATE);
+//                    OutputStreamWriter outputWriter=new OutputStreamWriter(fileout);
+//
+//                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+//                    byte[] bytes = stream.toByteArray();
+//                    imageEncoded = Base64.encodeToString(bytes,Base64.DEFAULT);
+//
+//                    outputWriter.write(textmsg.getText().toString());
+//                    outputWriter.close();
+//
+//                }catch (IOException e){
+//                    e.printStackTrace();
+//                }
                 // Get the Image from data
 
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
@@ -142,6 +213,32 @@ public class HomeActivity extends AppCompatActivity {
 
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     imageEncoded  = cursor.getString(columnIndex);
+
+                    String res  =FilenameUtils.getBaseName(mImageUri.getPath());
+
+                    Bitmap bitmap = null;
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),mImageUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+                    byte[] bytes = stream.toByteArray();
+                    imageEncoded = Base64.encodeToString(bytes,Base64.DEFAULT);
+
+                    // create a File object for the parent directory
+                    File wallpaperDirectory = new File("/sdcard/Hit/");
+// have the object build the directory structure, if needed.
+                    wallpaperDirectory.mkdirs();
+                    try{
+                        FileOutputStream writer = new FileOutputStream(new File(wallpaperDirectory,res+".txt"));
+                        writer.write(imageEncoded.getBytes());
+                        writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("LOG_TAG", "Selected Images : " + res + " " + wallpaperDirectory);
                     cursor.close();
 
                 } else {
@@ -161,20 +258,39 @@ public class HomeActivity extends AppCompatActivity {
                             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                             imageEncoded  = cursor.getString(columnIndex);
                             imagesEncodedList.add(imageEncoded);
+
+                            String res  =FilenameUtils.getBaseName(uri.getPath());
+
+                            Bitmap bitmap = null;
+                            try {
+                                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+                            byte[] bytes = stream.toByteArray();
+                            imageEncoded = Base64.encodeToString(bytes,Base64.DEFAULT);
+
+                            // create a File object for the parent directory
+                            File wallpaperDirectory = new File("/sdcard/Hit/");
+// have the object build the directory structure, if needed.
+                            wallpaperDirectory.mkdirs();
+                            try{
+                                FileOutputStream writer = new FileOutputStream(new File(wallpaperDirectory,res+".txt"));
+                                writer.write(imageEncoded.getBytes());
+                                writer.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Log.d("LOG_TAG", "Selected Images : " + res + " " + wallpaperDirectory);
+
                             cursor.close();
 
                         }
-                        Log.d("LOG_TAG", "Selected Images : " + mArrayUri.size());
                     }
                 }
-            } else {
-                Toast.makeText(this, "You haven't picked Image",
-                        Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
-                    .show();
-        }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 

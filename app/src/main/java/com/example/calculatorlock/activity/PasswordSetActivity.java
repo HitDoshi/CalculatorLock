@@ -97,15 +97,14 @@ public class PasswordSetActivity extends AppCompatActivity {
                 }
                 number.clear();
                 passwordSetBinding.calculateAnsTextview.setText("");
-
-
+                temp = total;
                 if(total-((int)(total))==0){
-                    passwordSetBinding.numberListTextview.setText("= " + (int)total);
+                    passwordSetBinding.numberListTextview.setText("= " + (int)(total));
+                    addData(String.valueOf((int)total));
                 }else{
                     passwordSetBinding.numberListTextview.setText(total+"");
+                    addData(String.valueOf(total));
                 }
-                temp = total;
-                addData(String.valueOf(total));
 
 //                if(!sharedPreferences.getBoolean(PreKey.Password_Set,false)) {
 //                    if(m.matches())
@@ -116,7 +115,6 @@ public class PasswordSetActivity extends AppCompatActivity {
 //                        startActivity(new Intent(getApplicationContext(), SecurityQuestionActivity.class));
 //                    }
 //                }
-
             }
         });
 
@@ -286,6 +284,7 @@ public class PasswordSetActivity extends AppCompatActivity {
                     number.clear();
                     temp = '\0';
                 }
+
                 addData("00");
             }
         });
@@ -295,12 +294,24 @@ public class PasswordSetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 symbol = null;
 
-                if(!number.get(number.size()-1).contains(".")) {
-                    if (temp != '\0') {
-                        number.clear();
-                        temp = '\0';
+                int size = number.size();
+
+                if (temp != '\0') {
+                    number.clear();
+                    temp = '\0';
+                }
+
+                if(size>0) {
+                    Pattern p = Pattern.compile(regex);
+                    Matcher m = p.matcher(number.get(size - 1));
+
+                    if (m.matches()) {
+                        addData(".");
+                    } else {
+                        addData("0.");
                     }
-                    addData(".");
+                }else{
+                    addData("0.");
                 }
             }
         });
@@ -461,8 +472,7 @@ public class PasswordSetActivity extends AppCompatActivity {
 
             if(p==0)
                 number.add(s);
-
-
+            
             num = 0;
         }
 
@@ -552,10 +562,17 @@ public class PasswordSetActivity extends AppCompatActivity {
             total=0;
         }
 
-        if(total-((int)(total))==0){
+        if(total-((int)(total))==0 && number.size()>1){
             passwordSetBinding.calculateAnsTextview.setText("= " + (int)total);
         }
 
-        passwordSetBinding.numberListTextview.setText(list);
+        if(number.size()==1) {
+            if(num1 - ((int)num1) == 0)
+                passwordSetBinding.numberListTextview.setText((int)num1+"");
+            else
+                passwordSetBinding.numberListTextview.setText(num1+"");
+        }else{
+            passwordSetBinding.numberListTextview.setText(list);
+        }
     }
 }

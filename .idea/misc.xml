@@ -14,7 +14,7 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/drawable/nav_header_background.xml" value="0.1015" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/font/font.xml" value="0.18796296296296297" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/activity_gallery.xml" value="0.18" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/activity_home.xml" value="0.14" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/activity_main.xml" value="0.12552083333333333" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/activity_password_recovery.xml" value="0.2" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/activity_password_set.xml" value="0.14" />
@@ -25,6 +25,7 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/confirm_password_dialog.xml" value="0.16" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/folder_list.xml" value="0.16" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/folder_list_gridview.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/gallery_img_viewer.xml" value="0.2" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/gallery_list.xml" value="0.18" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/nav_header.xml" value="0.12552083333333333" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/CalculatorLock/app/src/main/res/layout/nav_header_main.xml" value="0.12" />
