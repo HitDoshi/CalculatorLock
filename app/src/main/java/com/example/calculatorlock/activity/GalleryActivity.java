@@ -1,7 +1,6 @@
 package com.example.calculatorlock.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,12 +12,13 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.example.calculatorlock.R;
-import com.example.calculatorlock.adapter.FolderListGridViewAdapter;
 import com.example.calculatorlock.adapter.GalleryImgAdapter;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class GalleryActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ArrayList<Bitmap> arrayList = new ArrayList<>();
+    ArrayList<Bitmap> arrayList = new ArrayList<Bitmap>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,35 +36,54 @@ public class GalleryActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.folder_list_recyclerView);
 
-        File directory = new File("/sdcard/Hit/");
-        File[] files = directory.listFiles();
+        File image = new File("/sdcard/Image/");
+        File imageDetail = new File("/sdcard/ImageDetail/");
+        File[] files = image.listFiles();
 
-        if(files.length>0) {
+        if(files!=null) {
             arrayList.clear();
 
-            for (int i = 0; i < files.length; i++) {
-                Log.d("Files", "FileName:" + files[i].getName());
-                StringBuffer stringBuffer = new StringBuffer();
-                try {
-                    BufferedReader bufferedReader = new BufferedReader(new FileReader(files[i].getName()));
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        stringBuffer.append(line);
-                        stringBuffer.append("\n");
-                    }
-                    bufferedReader.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            for (File file : files) {
+
+                File readFrom = new File(image,file.getName());
+                byte[] content = new byte[(int)readFrom.length()];
+
+                try{
+
+                    FileInputStream stream = new FileInputStream(readFrom);
+                    stream.read(content);
+
+                    byte[] bytes = Base64.decode((new String(content)), Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    arrayList.add(bitmap);
+
+                }catch (Exception e){
+
                 }
 
-                byte[] bytes = Base64.decode(String.valueOf(stringBuffer), Base64.DEFAULT);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                arrayList.add(bitmap);
-                stringBuffer.delete(0, stringBuffer.length());
-
             }
+//                Log.d("Files", "FileName:" + file.getName());
+//                StringBuilder stringBuffer = new StringBuilder();
+//                try {
+//                    BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getName()));
+//                    String line;
+//                    while ((line = bufferedReader.readLine()) != null) {
+//                        stringBuffer.append(line);
+//                        stringBuffer.append("\n");
+//                        Log.d("File", String.valueOf(stringBuffer));
+//                    }
+//                    bufferedReader.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+////
+////                byte[] bytes = Base64.decode(String.valueOf(stringBuffer), Base64.DEFAULT);
+////                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+////                arrayList.add(bitmap);
+////                stringBuffer.delete(0, stringBuffer.length());
+//                arrayList.add(stringBuffer);
+//                stringBuffer.delete(0, stringBuffer.length());
+//            }
         }
 
         GalleryImgAdapter folderListGridViewAdapter = new GalleryImgAdapter(this,

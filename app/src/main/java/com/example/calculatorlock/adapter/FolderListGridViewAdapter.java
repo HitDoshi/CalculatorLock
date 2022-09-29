@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calculatorlock.R;
 import com.example.calculatorlock.activity.GalleryActivity;
+import com.example.calculatorlock.activity.NoteActivity;
 
 import java.util.ArrayList;
 
@@ -53,6 +54,9 @@ public class FolderListGridViewAdapter extends RecyclerView.Adapter<FolderListGr
             public void onClick(View view) {
                 if(position==0){
                     activity.startActivity(new Intent(activity,GalleryActivity.class));
+                }
+                if(position==3) {
+                    activity.startActivity(new Intent(activity, NoteActivity.class));
                 }
             }
         });

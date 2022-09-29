@@ -2,6 +2,8 @@ package com.example.calculatorlock.adapter;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calculatorlock.R;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class GalleryImgAdapter extends RecyclerView.Adapter<GalleryImgAdapter.ViewHolder> {
@@ -41,8 +44,15 @@ public class GalleryImgAdapter extends RecyclerView.Adapter<GalleryImgAdapter.Vi
     public void onBindViewHolder(@NonNull GalleryImgAdapter.ViewHolder holder, int position) {
 
         holder.img.setImageBitmap(image.get(position));
-//        holder.folder_name_textView.setText(folderName.get(position));
-//        holder.folder_work_title_textView.setText(folderTitle.get(position));
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.get(position).compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] imageInByte = stream.toByteArray();
+        long length = imageInByte.length;
+
+//        holder.NameOfImg_textView.setText(folderName.get(position));
+//        holder.dateOfImg_textView.setText(folderTitle.get(position));
+        holder.sizeOfImg_textView.setText((length/1000)+" KB");
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,14 +69,15 @@ public class GalleryImgAdapter extends RecyclerView.Adapter<GalleryImgAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView img;
-        public TextView folder_name_textView, folder_work_title_textView;
+        public TextView NameOfImg_textView, dateOfImg_textView , sizeOfImg_textView;
         public LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.img = (ImageView) itemView.findViewById(R.id.img);
-//            this.folder_name_textView = (TextView) itemView.findViewById(R.id.folder_name);
-//            this.folder_work_title_textView = (TextView) itemView.findViewById(R.id.folder_work_title);
+            this.NameOfImg_textView = (TextView) itemView.findViewById(R.id.NameOfImg);
+            this.dateOfImg_textView = (TextView) itemView.findViewById(R.id.dateOfImg);
+            this.sizeOfImg_textView = (TextView) itemView.findViewById(R.id.sizeOfImg);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.list_item);
         }
     }

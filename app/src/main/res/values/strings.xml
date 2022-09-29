@@ -11,4 +11,5 @@
     <string name="edittext_hint_1">Your answer</string>
     <string name="recovery_email_text">In case you forget your PASSWORD, we will send \nit to the email address below.</string>
     <string name="edittext_hint_2">Recovery Email</string>
+    <string name="enter_title">Enter Title</string>
 </resources>

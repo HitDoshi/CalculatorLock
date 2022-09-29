@@ -201,47 +201,48 @@ public class HomeActivity extends AppCompatActivity {
 
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
                 imagesEncodedList = new ArrayList<String>();
-                if(data.getData()!=null){
-
-                    Uri mImageUri=data.getData();
-
-                    // Get the cursor
-                    Cursor cursor = getContentResolver().query(mImageUri,
-                            filePathColumn, null, null, null);
-                    // Move to first row
-                    cursor.moveToFirst();
-
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    imageEncoded  = cursor.getString(columnIndex);
-
-                    String res  =FilenameUtils.getBaseName(mImageUri.getPath());
-
-                    Bitmap bitmap = null;
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),mImageUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
-                    byte[] bytes = stream.toByteArray();
-                    imageEncoded = Base64.encodeToString(bytes,Base64.DEFAULT);
-
-                    // create a File object for the parent directory
-                    File wallpaperDirectory = new File("/sdcard/Hit/");
-// have the object build the directory structure, if needed.
-                    wallpaperDirectory.mkdirs();
-                    try{
-                        FileOutputStream writer = new FileOutputStream(new File(wallpaperDirectory,res+".txt"));
-                        writer.write(imageEncoded.getBytes());
-                        writer.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    Log.d("LOG_TAG", "Selected Images : " + res + " " + wallpaperDirectory);
-                    cursor.close();
-
-                } else {
+//                if(data.getData()!=null){
+//
+//                    Uri mImageUri=data.getData();
+//
+//                    // Get the cursor
+//                    Cursor cursor = getContentResolver().query(mImageUri,
+//                            filePathColumn, null, null, null);
+//                    // Move to first row
+//                    cursor.moveToFirst();
+//
+//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                    imageEncoded  = cursor.getString(columnIndex);
+//
+//                    String res  =FilenameUtils.getBaseName(mImageUri.getPath());
+//
+//                    Bitmap bitmap = null;
+//                    try {
+//                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),mImageUri);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+//                    byte[] bytes = stream.toByteArray();
+//                    imageEncoded = Base64.encodeToString(bytes,Base64.DEFAULT);
+//
+//                    // create a File object for the parent directory
+//                    File wallpaperDirectory = new File("/sdcard/Hit/");
+//// have the object build the directory structure, if needed.
+//                    wallpaperDirectory.mkdirs();
+//                    try{
+//                        FileOutputStream writer = new FileOutputStream(new File(wallpaperDirectory,res+".txt"));
+//                        writer.write(imageEncoded.getBytes());
+//                        writer.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    Log.d("LOG_TAG", "Selected Images : " + res + " " + wallpaperDirectory);
+//                    cursor.close();
+//
+//                } else {
+        if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK && null != data) {
                     if (data.getClipData() != null) {
                         ClipData mClipData = data.getClipData();
                         ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
@@ -256,38 +257,76 @@ public class HomeActivity extends AppCompatActivity {
                             cursor.moveToFirst();
 
                             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                            imageEncoded  = cursor.getString(columnIndex);
+                            imageEncoded = cursor.getString(columnIndex);
                             imagesEncodedList.add(imageEncoded);
 
-                            String res  =FilenameUtils.getBaseName(uri.getPath());
+                            String res = FilenameUtils.getBaseName(uri.getPath());
 
                             Bitmap bitmap = null;
                             try {
-                                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                             byte[] bytes = stream.toByteArray();
-                            imageEncoded = Base64.encodeToString(bytes,Base64.DEFAULT);
+                            imageEncoded = Base64.encodeToString(bytes, Base64.DEFAULT);
 
                             // create a File object for the parent directory
-                            File wallpaperDirectory = new File("/sdcard/Hit/");
+                            File wallpaperDirectory = new File("/sdcard/Image/");
 // have the object build the directory structure, if needed.
                             wallpaperDirectory.mkdirs();
-                            try{
-                                FileOutputStream writer = new FileOutputStream(new File(wallpaperDirectory,res+".txt"));
+                            try {
+                                FileOutputStream writer = new FileOutputStream(new File(wallpaperDirectory,
+                                        res + ".txt"));
                                 writer.write(imageEncoded.getBytes());
                                 writer.close();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                             Log.d("LOG_TAG", "Selected Images : " + res + " " + wallpaperDirectory);
-
+                            Log.d("Total Selected File:-",mClipData.getItemCount()+"");
                             cursor.close();
-
                         }
+                    }else{
+                        Uri mImageUri=data.getData();
+
+                        // Get the cursor
+                        Cursor cursor = getContentResolver().query(mImageUri,
+                                filePathColumn, null, null, null);
+                        // Move to first row
+                        cursor.moveToFirst();
+
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        imageEncoded  = cursor.getString(columnIndex);
+
+                        String res  =FilenameUtils.getBaseName(mImageUri.getPath());
+
+                        Bitmap bitmap = null;
+                        try {
+                            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),mImageUri);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+                        byte[] bytes = stream.toByteArray();
+                        imageEncoded = Base64.encodeToString(bytes,Base64.DEFAULT);
+
+                        // create a File object for the parent directory
+                        File wallpaperDirectory = new File("/sdcard/Image/");
+    // have the object build the directory structure, if needed.
+                        wallpaperDirectory.mkdirs();
+                        try{
+                            FileOutputStream writer = new FileOutputStream(new File(wallpaperDirectory,res+".txt"));
+                            writer.write(imageEncoded.getBytes());
+                            writer.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("LOG_TAG", "Selected Images : " + res + " " + wallpaperDirectory);
+                        cursor.close();
                     }
                 }
 
