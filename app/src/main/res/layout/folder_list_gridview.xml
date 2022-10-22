@@ -30,13 +30,13 @@
                 />
         </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:id="@+id/folder_name"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:id="@+id/folder_name"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

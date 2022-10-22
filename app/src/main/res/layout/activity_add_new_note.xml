@@ -11,28 +11,27 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        >
+        android:layout_alignParentEnd="true"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
 
         <ImageView
             android:id="@+id/bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:src="@drawable/arrow_left"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="15dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:id="@+id/title"
             android:layout_marginLeft="35dp"
             android:layout_toRightOf="@+id/bar1"
             android:text="Note"
@@ -44,26 +43,29 @@
             android:id="@+id/tick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tick"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_gravity="end"
-            android:layout_marginRight="15dp"/>
+            android:layout_marginRight="15dp"
+            android:src="@drawable/tick"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
+        android:id="@+id/title_OfNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title_OfNote"
-        android:hint="@string/enter_title"
         android:layout_below="@+id/toolbar"
-        android:gravity="top"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
         android:backgroundTint="@color/mix_silver"
-        android:layout_margin="25dp"/>
+        android:gravity="top"
+        android:hint="@string/enter_title" />
 
     <EditText
         android:id="@+id/note"

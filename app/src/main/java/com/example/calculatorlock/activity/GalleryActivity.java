@@ -36,7 +36,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.folder_list_recyclerView);
 
-        File image = new File("/sdcard/Image/");
+        File image = new File("/sdcard/Hide/Image");
         File imageDetail = new File("/sdcard/ImageDetail/");
         File[] files = image.listFiles();
 

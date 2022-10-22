@@ -32,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.calculatorlock.R;
-import com.example.calculatorlock.adapter.FolderListAdapter;
 import com.example.calculatorlock.adapter.FolderListGridViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -274,7 +273,7 @@ public class HomeActivity extends AppCompatActivity {
                             imageEncoded = Base64.encodeToString(bytes, Base64.DEFAULT);
 
                             // create a File object for the parent directory
-                            File wallpaperDirectory = new File("/sdcard/Image/");
+                            File wallpaperDirectory = new File("/sdcard/Hide/Image/");
 // have the object build the directory structure, if needed.
                             wallpaperDirectory.mkdirs();
                             try {
@@ -315,7 +314,7 @@ public class HomeActivity extends AppCompatActivity {
                         imageEncoded = Base64.encodeToString(bytes,Base64.DEFAULT);
 
                         // create a File object for the parent directory
-                        File wallpaperDirectory = new File("/sdcard/Image/");
+                        File wallpaperDirectory = new File("/sdcard/Hide/Image/");
     // have the object build the directory structure, if needed.
                         wallpaperDirectory.mkdirs();
                         try{
